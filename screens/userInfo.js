@@ -111,7 +111,7 @@ console.log(result);
   console.log(r);
    return (
     <View>
-      
+      <Text>User info</Text>
       <TouchableOpacity onPress={() => console.log("Delete")}>
       <Text>{r.get("user_id")}</Text>
       

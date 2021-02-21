@@ -14,7 +14,8 @@ import UpdateUser from './screens/updateuser';
 import UserInfo from './screens/userInfo';
 import LocationInfo from './screens/locationInfo';
 import DisplayScreen from './screens/displayScreen';
-
+import LocationHandler from './screens/locationHandler';
+import AddReview from './screens/addReview';
 
 const Drawer = createDrawerNavigator();
 
@@ -45,6 +46,8 @@ function App(){
             <Stack.Screen name="UserInfo" component={UserInfo} />
             <Stack.Screen name="LocationInfo" component={LocationInfo} />
             <Stack.Screen name="DisplayScreen" component={DisplayScreen} />
+            <Stack.Screen name="LocationHandler" component={LocationHandler} />
+            <Stack.Screen name="AddReview" component={AddReview} />
           </Stack.Navigator>
        
       </NavigationContainer>

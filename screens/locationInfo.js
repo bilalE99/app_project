@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class LocationInfo extends Component{
@@ -63,13 +63,16 @@ render(){
         <FlatList
           data={this.state.locationData}
           renderItem={({item}) => (
-              <View>
-                  <Text>{item.location_name}</Text>
-                  <Button
-                      title="Delete"
-                      onPress={() => console.log("Delete")}
-                  />
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("LocationHandler", {location_id: item.location_id})}>
+               <View style={{padding:20}}>
+                  <Text>ID: {item.location_id}</Text>
+                  <Text>Location Name: {item.location_name}</Text>
+                  <Text>Ratings: {item.avg_overall_rating}</Text>
+                  <Text>Review: {item.location_reviews.review_body}</Text>
+                  
               </View>
+            </TouchableOpacity>
+             
           )}
           keyExtractor={(item,index) => item.location_id.toString()}
         />

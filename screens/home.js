@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Title } from 'native-base';
-import { Header } from 'react-native/Libraries/NewAppScreen';
+
 
 
 class HomeScreen extends Component{
@@ -16,7 +16,6 @@ class HomeScreen extends Component{
 
     return(
         <View style={styles.container}>
-          <Header>Welcome</Header>
           <Button
           title="Account Mangement"
           onPress={() => navigation.navigate("Account Management")}
