@@ -48,6 +48,7 @@ function App(){
             <Stack.Screen name="DisplayScreen" component={DisplayScreen} />
             <Stack.Screen name="LocationHandler" component={LocationHandler} />
             <Stack.Screen name="AddReview" component={AddReview} />
+            
           </Stack.Navigator>
        
       </NavigationContainer>

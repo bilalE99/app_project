@@ -1,7 +1,8 @@
 import React , {Component} from 'react';
 import {Button , ToastAndroid, View} from 'react-native';
-import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import {ScrollView, TextInput, TouchableHighlight, Text} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 class Login extends Component{
   constructor(props){
@@ -53,29 +54,60 @@ class Login extends Component{
     })
   }
   render(){
-   
-const navigation = this.props.navigation;
     return(
-<View>
-        <TextInput
-        placeholder="Enter your email"
-        onChangeText={(email) => this.setState ({email})}
-        value={this.state.email}
-        style={{padding:5, borderWidth:1, margin:10}}
-        />
-        <TextInput
-        placeholder="Enter your password"
-        onChangeText={(password) => this.setState ({password})}
-        value={this.state.password}
-        style={{padding:5, borderWidth:1, margin:10}}
-        />
-        <Button
-        title="Login"
-        onPress={() =>  this.login()}
-        />
-        </View>
+      <View>
+      <TextInput
+      placeholder="Enter your email"
+      onChangeText={(email) => this.setState ({email})}
+      value={this.state.email}
+      style={{padding:5, borderWidth:1, margin:10}}
+      />
+      <TextInput
+      placeholder="Enter your password"
+      onChangeText={(password) => this.setState ({password})}
+      value={this.state.password}
+      style={{padding:5, borderWidth:1, margin:10}}
+      />
+      <Button
+      title="Login"
+      onPress={() =>  this.login()}
+      />
+      </View>
     );
   }
 }
  
+
+
 export default Login;
+
+/*
+
+  <View style={styles.container}>
+        <View style={styles.inputContainer}>
+
+          <TextInput style={styles.inputs}
+            placeholder="Enter your email"
+            underlineColorAndroid='transparent'
+            onChangeText={(email) => this.setState ({email})}
+            value={this.state.email}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputs}
+            placeholder="Enter your password"
+            underlineColorAndroid='transparent'
+            onChangeText={(password) => this.setState ({password})}
+            value={this.state.password}
+          />
+        </View>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.login()}>
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight style={styles.buttonContainer}>
+            <Text>Register</Text>
+        </TouchableHighlight>
+      </View>
+*/
