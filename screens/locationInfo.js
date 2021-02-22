@@ -55,7 +55,7 @@ getInfo = async () => {
 
 }
 render(){
-   data  = this.state.locationData;
+  // data  = this.state.locationData;
   
    return (
     <View>
@@ -68,7 +68,6 @@ render(){
                   <Text>ID: {item.location_id}</Text>
                   <Text>Location Name: {item.location_name}</Text>
                   <Text>Ratings: {item.avg_overall_rating}</Text>
-                  <Text>Review: {item.location_reviews.review_body}</Text>
                   
               </View>
             </TouchableOpacity>

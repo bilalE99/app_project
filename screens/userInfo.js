@@ -53,9 +53,9 @@ checkLoggedIn = async () => {
         console.log(responseJson);
         this.setState({
             isLoading: false,
-            userData: responseJson
+            userData: responseJson,
         })
-        
+       
       })
       .catch((error) => {
         console.log(error);
@@ -65,54 +65,8 @@ checkLoggedIn = async () => {
 
   }
 
-
-/*
- <Text>{ this.state.userData}</Text>  const data = {this:userData};var x = data1.user_id[0]; <Text>{data1} </Text>
-              <Text> {a}</Text>
-              var obj = JSON.parse(val2);
-        var a = obj.getItem("user_id");
-        alert(a);
-        const data1 = this.state.userData;
-    
-      return (
-        
-           <View>
-            <Text>User details: </Text> 
-           <Text>{data1}</Text> 
-            <Button
-              title="Show!"
-              onPress={() => this.getUserInfo()}
-              />
-             
-           </View> var data1 = Object.entries(data);
- var result = Object.keys(data).map((key) => [(key), data[key]]);
-
-console.log(result);
-    );<View>
-        <FlatList
-          data={r}
-          renderItem={({item}) => (
-              <View>
-                <TouchableOpacity>
-                  <Text>{item}</Text>
-                </TouchableOpacity>
-                  
-                  
-              </View>
-          )}
-          keyExtractor={(item,index) => item.user_id}
-        />
-      </View>
-*/
-  render(){
-    //convert user data into list to then pass into flatlist
-  data= this.state.userData;
-  let r=new Map(Object.entries(data));
-  console.log(r);
-   return (
-    <View>
-      <Text>User info</Text>
-      <TouchableOpacity onPress={() => console.log("Delete")}>
+  /*
+  <TouchableOpacity onPress={() => console.log("Delete")}>
       <Text>{r.get("user_id")}</Text>
       
       </TouchableOpacity>
@@ -125,6 +79,34 @@ console.log(result);
       <TouchableOpacity>
       <Text>{r.get("last_name")}</Text>
       </TouchableOpacity>
+data= this.state.userData;
+
+
+  let r=new Map(Object.entries(data));
+   console.log(r);
+  */
+  render(){
+    //convert user data into list to then pass into flatlist
+  
+  //let x = r.get(['reviews']['review']['review_id']);
+ 
+   return (
+    <View>
+      <Text>User info: </Text>
+    
+      <FlatList
+          data={this.state.userData.reviews}
+          renderItem={({item}) => (
+              <View>
+                <TouchableOpacity>
+                  <Text>{item.review.review_body}</Text>
+                </TouchableOpacity>
+                  
+                  
+              </View>
+          )}
+          keyExtractor={(item) => item.review.review_id.toString()}
+        />
     </View>
 );
     }

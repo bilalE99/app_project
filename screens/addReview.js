@@ -18,19 +18,30 @@ class ReviewScreen extends Component{
 
   }
   addReview = async () => {
+    let to_send = {};
     const loc_id = this.props.route.params.location_id;
     const value = await AsyncStorage.getItem('@session_token');
+
+  
+    to_send.overall_rating = parseInt(this.state.overall_rating);
+    to_send.price_rating = parseInt(this.state.price_rating);   
+    to_send.quality_rating = parseInt(this.state.quality_rating);    
+    to_send.clenliness_rating = parseInt(this.state.clenliness_rating);
+    to_send.review_body = this.state.review_body;
+
+
     return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+loc_id+"/review", {
       method: 'post',
       headers: {
         'X-Authorization': value,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(this.state),
+      body: JSON.stringify(to_send),
     })
     .then((response) => {
       if(response.status === 201){
-        return response.json()
+        console.log(response);
+        
       }
        else if (response.status ===400){
            console.log(response);
@@ -41,9 +52,9 @@ class ReviewScreen extends Component{
       }
 
     })
-    .then(async (responseJson) => {
+    .then(async () => {
       console.log("Review created");
-      this.props.navigation.navigate("LocationInfo");
+      this.props.navigation.push("LocationInfo");
       ToastAndroid.show("Review created", ToastAndroid.SHORT);
 
     })
