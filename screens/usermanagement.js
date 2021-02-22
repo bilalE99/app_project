@@ -91,6 +91,10 @@ class UserManagement extends Component{
           title="Show loc details"
           onPress={() => navigation.navigate("LocationInfo")}
           />
+            <Button
+          title="Search locations"
+          onPress={() => navigation.navigate("SearchLocation")}
+          />
          
         </View>
     );

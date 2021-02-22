@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator, ScrollView,FlatList, TouchableOpacity,StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class GetUser extends Component{
@@ -64,53 +64,41 @@ checkLoggedIn = async () => {
 
 
   }
-
-  /*
-  <TouchableOpacity onPress={() => console.log("Delete")}>
-      <Text>{r.get("user_id")}</Text>
-      
-      </TouchableOpacity>
-      <TouchableOpacity>
-      <Text>{r.get("email")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-      <Text>{r.get("first_name")}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-      <Text>{r.get("last_name")}</Text>
-      </TouchableOpacity>
-data= this.state.userData;
-
-
-  let r=new Map(Object.entries(data));
-   console.log(r);
-  */
   render(){
-    //convert user data into list to then pass into flatlist
-  
-  //let x = r.get(['reviews']['review']['review_id']);
- 
-   return (
-    <View>
-      <Text>User info: </Text>
-    
-      <FlatList
+    return (
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={{padding:5}}> 
+      <Text >My Account</Text>
+      <Text style={{padding:5}}>Name: {this.state.userData.first_name} {this.state.userData.last_name}</Text>
+      <Text style={{padding:5}}>Email: {this.state.userData.email}</Text>
+      <Text style={{padding:5}}>My Reviews: </Text>
+      <FlatList style={{padding:5}}
           data={this.state.userData.reviews}
           renderItem={({item}) => (
-              <View>
-                <TouchableOpacity>
+              <View style={{padding:5,flex: 1,paddingVertical: 20}}>
+                  <Text>{item.location.location_name}</Text>
+                  <Text>{item.location.location_town}</Text>
+                  <Text>Overall: {item.review.overall_rating}</Text>
+                  <Text>Price: {item.review.price_rating}</Text>
+                  <Text>Clenliness{item.review.clenliness_rating}</Text>
+                  <Text>Quality: {item.review.quality_rating}</Text>
                   <Text>{item.review.review_body}</Text>
-                </TouchableOpacity>
-                  
-                  
+                  <Text>Likes: {item.review.likes}</Text>
               </View>
           )}
           keyExtractor={(item) => item.review.review_id.toString()}
         />
     </View>
+  </ScrollView>
+    
 );
     }
 }
 
+const styles = StyleSheet.create({
+  contentContainer: {
+    paddingVertical: 20
+  }
+});
 
 export default GetUser;

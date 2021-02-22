@@ -16,6 +16,7 @@ import LocationInfo from './screens/locationInfo';
 import DisplayScreen from './screens/displayScreen';
 import LocationHandler from './screens/locationHandler';
 import AddReview from './screens/addReview';
+import SearchLocation from './screens/search';
 
 const Drawer = createDrawerNavigator();
 
@@ -48,7 +49,7 @@ function App(){
             <Stack.Screen name="DisplayScreen" component={DisplayScreen} />
             <Stack.Screen name="LocationHandler" component={LocationHandler} />
             <Stack.Screen name="AddReview" component={AddReview} />
-            
+            <Stack.Screen name="SearchLocation" component={SearchLocation} />
           </Stack.Navigator>
        
       </NavigationContainer>
