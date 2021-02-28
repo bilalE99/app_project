@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator, ScrollView,FlatList, TouchableOpacity,StyleSheet, YellowBox } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LogBox } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 LogBox.ignoreLogs(['VirtualizedLists should never be nested inside plain ScrollViews with the same orientation - use another VirtualizedList-backed container instead.']);
+
+
 class GetUser extends Component{
   constructor(props){
     super(props);
@@ -52,7 +55,7 @@ checkLoggedIn = async () => {
         }
       })
       .then((responseJson) => {
-        //console.log(responseJson);
+        console.log(responseJson);
         this.setState({
             isLoading: false,
             userData: responseJson,
@@ -130,12 +133,20 @@ checkLoggedIn = async () => {
               title="Delete Review"
               onPress={() =>  this.DeleteReview(item.location.location_id,item.review.review_id)}
               />
+             
               </View>
-              </TouchableOpacity>     
+              
+              </TouchableOpacity>  
           )}
           keyExtractor={(item) => item.review.review_id.toString()}
         />
-     
+        <View >
+          <TouchableOpacity onPress={() => console.log("fff")}>
+            <Icon name='heart' style={{padding:5}}/>
+          </TouchableOpacity>
+           
+        </View>
+      
     </View>
   </ScrollView>
       </View>

@@ -18,6 +18,7 @@ import LocationHandler from './screens/locationHandler';
 import AddReview from './screens/addReview';
 import SearchLocation from './screens/search';
 import UpdateReview from './screens/updateReview';
+import ViewReview from './screens/viewReview';
 
 
 const Drawer = createDrawerNavigator();
@@ -30,7 +31,7 @@ function AppDrawer(){
             <Drawer.Screen name="Home" component={Home}/>
             <Drawer.Screen name="Reviews" component={UserManagement}/>
             <Drawer.Screen name="Settings" component={Page3}/>
-            <Drawer.Screen name="Logout" component={Login} style={{marginTop: '3%'}}/>
+            <Drawer.Screen name="Logout" component={Login} style={{marginTop: '100%', padding: 50}}/>
           </Drawer.Navigator>
     );
   }
@@ -53,6 +54,7 @@ function App(){
             <Stack.Screen name="AddReview" component={AddReview} />
             <Stack.Screen name="SearchLocation" component={SearchLocation} />
             <Stack.Screen name="UpdateReview" component={UpdateReview} />
+            <Stack.Screen name="ViewReview" component={ViewReview} />
           </Stack.Navigator>
        
       </NavigationContainer>
@@ -63,26 +65,3 @@ function App(){
 
 
 export default App;
-
-/*
-class App extends Component{
-  render(){
-
-  return(
-      <NavigationContainer>
-        
-          <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home}/>
-            <Stack.Screen name="Account Management" component={UserManagement} />
-            <Stack.Screen name="Page3" component={Page3} />
-            <Stack.Screen name="Sign Up" component={Signup} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="UpdateUser" component={UpdateUser} />
-            <Stack.Screen name="UserInfo" component={UserInfo} />
-          </Stack.Navigator>
-       
-      </NavigationContainer>
-    );
-  }
-}
-*/

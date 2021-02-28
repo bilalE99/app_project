@@ -21,6 +21,11 @@ render(){
         title="Create new Review"
         onPress={() => this.props.navigation.navigate("AddReview", {location_id: loc_id})}
         />
+        
+        <Button style={{padding:20}}
+        title="View Reviews"
+        onPress={() => this.props.navigation.navigate("ViewReview", {location_id: loc_id})}
+        />
       </View>
       
     </View>

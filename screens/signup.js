@@ -1,6 +1,7 @@
 import React , {Component} from 'react';
-import {Button , ToastAndroid} from 'react-native';
+import {Button , ToastAndroid, View} from 'react-native';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import styles from '../styleSheets/customStyles';
 
 class SignupScreen extends Component{
   constructor(props){
@@ -49,8 +50,10 @@ class SignupScreen extends Component{
       }
       render(){
         return(
+          <View style={styles.container}>
             <ScrollView>
-              <TextInput
+              <View style={styles.container} >
+                <TextInput style={styles.inputs}
               placeholder="Enter your first name..."
               onChangeText={(first_name) => this.setState ({first_name})}
               value={this.state.first_name}
@@ -75,11 +78,15 @@ class SignupScreen extends Component{
               style={{padding:5, borderWidth:1, margin:5}}
               secureTextEntry={true}
               />
-              <Button
+              <Button style={styles.buttonContainer}
               title="Create an account"
               onPress={() =>  this.signup()}
               />
+              </View>
+              
             </ScrollView>
+          </View>
+            
         );
 
       }

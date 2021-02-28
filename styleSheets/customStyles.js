@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
       borderRadius:30,
     },
     loginButton: {
-      backgroundColor: "#00b5ec",
+      backgroundColor: "red",
     },
     loginText: {
       color: 'white',
