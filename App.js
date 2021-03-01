@@ -25,6 +25,7 @@ const Drawer = createDrawerNavigator();
 
 const Stack = createStackNavigator();
 
+
 function AppDrawer(){
   return(
           <Drawer.Navigator drawerType="slide">

@@ -119,7 +119,10 @@ checkLoggedIn = async () => {
           data={this.state.userData.reviews}
           renderItem={({item}) => (
             <TouchableOpacity onPress={() => this.props.navigation.navigate("UpdateReview", 
-            {location_id: item.location.location_id, review_id: item.review.review_id})}>
+            {location_id: item.location.location_id, review_id: item.review.review_id,
+              overall_rating: item.review.overall_rating, price_rating: item.review.price_rating,
+              clenliness_rating: item.review.clenliness_rating, quality_rating: item.review.quality_rating,
+              review_body: item.review.review_body})}>
               <View style={{padding:5,flex: 1,paddingVertical: 20}}>
                   <Text>{item.location.location_name}</Text>
                   <Text>{item.location.location_town}</Text>
