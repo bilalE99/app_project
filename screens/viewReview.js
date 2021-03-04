@@ -63,7 +63,7 @@ render(){
         <FlatList
           data={this.state.locationData.location_reviews}
           renderItem={({item}) => (
-            <TouchableOpacity>
+            
                <View style={{padding:20}}>
                   <Text>{item.review_body}</Text>
                   <Text>Overall Rating:  {item.overall_rating}</Text>
@@ -71,9 +71,12 @@ render(){
                   <Text>Quality:  {item.quality_rating}</Text>
                   <Text>clenliness:  {item.clenliness_rating}</Text>
                   <Text>Likes:  {item.likes}</Text>
-                  
+                  <Button
+              title="Like"
+              onPress={() =>  console.log("ss")}
+              />
               </View>
-            </TouchableOpacity>
+           
              
           )}
           keyExtractor={(item,index) => item.review_id.toString()}

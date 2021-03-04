@@ -55,21 +55,40 @@ getInfo = async () => {
 
 }
 render(){
-  // data  = this.state.locationData;
+  //let data  = this.state.locationData;
   
    return (
-    <View>
-      <View>
+    <View style={{padding:20, flex: 1 }}>
+      <Text style={{padding:10}}>Welcome to the Coffida App!</Text>
+        <Text style={{padding:10}}>Below you can view the best Cafe's around!</Text>
+        <Text style={{padding:10}}>Hope you enjoy :))</Text>
+      
+      <View style={{ flex: 1 }}>
         <FlatList
           data={this.state.locationData}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("LocationHandler", {location_id: item.location_id})}>
+            <TouchableOpacity >
                <View style={{padding:20}}>
-                  <Text>ID: {item.location_id}</Text>
-                  <Text>Location Name: {item.location_name}</Text>
-                  <Text>Ratings: {item.avg_overall_rating}</Text>
-                  
+                  <Text>Town: {item.location_town}</Text>
+                  <Text>Name of Cafe: {item.location_name}</Text>  
+                  <Text>Overall Rating: {item.avg_overall_rating}</Text>
+                  <Text>Overall Rating: {item.avg_overall_rating}</Text>
+                  <Text>Price Rating: {item.avg_price_rating}</Text>
+                  <Text>Quality Rating: {item.avg_quality_rating}</Text>
+                  <Text>Clenliness Rating: {item.avg_clenliness_rating}</Text>
               </View>
+              <Button
+              title="Favourite this Location"
+              onPress={() =>  console.log("ss")}
+              />
+                <Button
+              title="View reviews for this Location"
+              onPress={() => this.props.navigation.navigate("ViewReview", {location_id: item.location_id})}
+              />
+               <Button style={{padding:20}}
+        title="Create new Review"
+        onPress={() => this.props.navigation.navigate("AddReview", {location_id: item.location_id})}
+            />
             </TouchableOpacity>
              
           )}
