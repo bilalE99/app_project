@@ -1,7 +1,10 @@
 import React , {Component} from 'react';
-import {Button , ToastAndroid} from 'react-native';
-import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import {Button , ToastAndroid, TouchableWithoutFeedbackBase} from 'react-native';
+import {ScrollView, TextInput,View} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {RNCamera} from 'react-native-camera';
+import styles from '../styleSheets/customStyles';
+
 
 class UpdReview extends Component{
   constructor(props){
@@ -86,7 +89,6 @@ class UpdReview extends Component{
     })
       }
 
-
       render(){
         return(
             <ScrollView>
@@ -127,7 +129,20 @@ class UpdReview extends Component{
               title="Update Review"
               onPress={() =>  this.UpdateReview()}
               />
+
+              <RNCamera 
+                ref={ref => {
+                  this.camera = ref;
+                }}
+                style={styles.preview}
+                captureAudio={false}
+                />
+              <Button
+              title="Add a photo"
+              onPress={() => this.props.navigation.navigate("TakePhoto")}
+              />
             </ScrollView>
+            
         );
 
       }

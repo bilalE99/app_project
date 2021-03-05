@@ -44,6 +44,11 @@ const styles = StyleSheet.create({
     },
     loginText: {
       color: 'white',
+    },
+    preview: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
     }
 });
 export default styles;

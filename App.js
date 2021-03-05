@@ -21,6 +21,7 @@ import AddReview from './screens/addReview';
 import SearchLocation from './screens/search';
 import UpdateReview from './screens/updateReview';
 import ViewReview from './screens/viewReview';
+import TakePhoto from './screens/takePhoto';
 
 
 const Drawer = createDrawerNavigator();
@@ -53,6 +54,7 @@ function AppDrawer() {
           <Icon name="search" size={26} />
         )}} />
     </Tab.Navigator>
+    
   );
 }
 
@@ -75,6 +77,7 @@ function App() {
         <Stack.Screen name="SearchLocation" component={SearchLocation} />
         <Stack.Screen name="UpdateReview" component={UpdateReview} />
         <Stack.Screen name="ViewReview" component={ViewReview} />
+        <Stack.Screen name="TakePhoto" component={TakePhoto} />
       </Stack.Navigator>
 
     </NavigationContainer>
