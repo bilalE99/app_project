@@ -137,10 +137,7 @@ class UpdReview extends Component{
                 style={styles.preview}
                 captureAudio={false}
                 />
-              <Button
-              title="Add a photo"
-              onPress={() => this.props.navigation.navigate("TakePhoto")}
-              />
+          
             </ScrollView>
             
         );

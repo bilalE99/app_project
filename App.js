@@ -21,7 +21,8 @@ import AddReview from './screens/addReview';
 import SearchLocation from './screens/search';
 import UpdateReview from './screens/updateReview';
 import ViewReview from './screens/viewReview';
-import TakePhoto from './screens/takePhoto';
+import TakePhoto1 from './screens/TakePhoto';
+import DisplayPhoto from './screens/displayPhoto';
 
 
 const Drawer = createDrawerNavigator();
@@ -77,7 +78,8 @@ function App() {
         <Stack.Screen name="SearchLocation" component={SearchLocation} />
         <Stack.Screen name="UpdateReview" component={UpdateReview} />
         <Stack.Screen name="ViewReview" component={ViewReview} />
-        <Stack.Screen name="TakePhoto" component={TakePhoto} />
+        <Stack.Screen name="TakePhoto" component={TakePhoto1} />
+        <Stack.Screen name="DisplayPhoto" component={DisplayPhoto} />
       </Stack.Navigator>
 
     </NavigationContainer>

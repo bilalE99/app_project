@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator, ScrollView,FlatList, TouchableOpacity,StyleSheet, YellowBox } from 'react-native';
+import { Image,View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator, ScrollView,FlatList, TouchableOpacity,StyleSheet, YellowBox } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LogBox } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -15,6 +15,10 @@ class GetUser extends Component{
     this.state = {
         userData: [],
         isLoading:true,
+        photoInfo:[],
+        imageUrls: [],
+        photos: '',
+        
     };
 
 }
@@ -67,6 +71,7 @@ checkLoggedIn = async () => {
         ToastAndroid.show(error, ToastAndroid.SHORT,ToastAndroid.CENTER);
       })
 
+      
 
   }
 
@@ -105,8 +110,53 @@ checkLoggedIn = async () => {
       ToastAndroid.show("error", ToastAndroid.SHORT);
     })
       }
+
+      getPhoto = async (loc_id,rev_id) => {
+    
+        return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+loc_id+"/review/"+rev_id+'/photo', {
+          method: 'get',
+          headers: {
+          },
+        })
+        .then((response) => {
+          if(response.status === 200){
+            console.log(response);
+            let json = response;
+            
+            this.setState({
+              photoInfo: response,
+              photos: json.url
+            })
+          
+          }
+           else if (response.status ===404){
+               console.log(response);
+          }
+          else{
+            throw 'Something went wrong';
+          }
+    
+        })
+        .then(async () => {
+          console.log("Photo Retrieved");
+          //this.props.navigation.navigate("DisplayPhoto",{photo_url: this.state.photoInfo})
+        })
+        .catch((error) => {
+          console.log(error);
+          ToastAndroid.show("error", ToastAndroid.SHORT);
+        })
+          }
+
+
   render(){
+
+/*    const data = this.state.photoInfo;
+    const x = new Map(Object.entries(data));
+    var y = x.get('url');
+    */
     return (
+
+      
       <View>
 
         <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -136,7 +186,28 @@ checkLoggedIn = async () => {
               title="Delete Review"
               onPress={() =>  this.DeleteReview(item.location.location_id,item.review.review_id)}
               />
-             
+              <Button
+              title="Add a photo"
+              onPress={() => this.props.navigation.navigate("TakePhoto",
+              {location_id: item.location.location_id, review_id: item.review.review_id})}
+              />
+                    <Button
+              title="Display Photo"
+              onPress={() =>  this.getPhoto(item.location.location_id,item.review.review_id)}
+              />        
+              <Button
+              title="Like"
+              onPress={() =>  console.log("ss")}
+              options={{
+                tabBarIcon: ({  }) => (
+                  <Icon name="heart" size={26} />
+                )}} />
+              <Image 
+          source={{uri: this.state.photos}} 
+          style={{height: 100, width: 100}}
+          resizeMode= 'cover'
+        />
+
               </View>
               
               </TouchableOpacity>  
@@ -144,9 +215,7 @@ checkLoggedIn = async () => {
           keyExtractor={(item) => item.review.review_id.toString()}
         />
         <View >
-          <TouchableOpacity onPress={() => console.log("fff")}>
-            <Icon name='heart' style={{padding:5}}/>
-          </TouchableOpacity>
+
            
         </View>
       
