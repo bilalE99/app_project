@@ -12,16 +12,14 @@ class TakePhotos extends Component {
     takePhoto = async () => {
         if (this.camera) {
             const options = { quality: 0.5, base64: true }
-            try {
+          
                 const data = await this.camera.takePictureAsync(options);
 
                 console.log('data uri:' + data.uri);
                 this.addPhoto(data);
-                await AsyncStorage.setItem('@photo_uri' , data);
-            }
-            catch (error) {
-                console.log(error);
-            }
+               // await AsyncStorage.setItem('@photo_uri' , data.uri);
+          
+        
         }
     }
 
