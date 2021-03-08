@@ -208,7 +208,6 @@ class GetUser extends Component {
       })
     }
   
-
   render() {
 
     /*    const data = this.state.photoInfo;
@@ -225,6 +224,9 @@ class GetUser extends Component {
             <Text >My Account</Text>
             <Text style={{ padding: 5 }}>Name: {this.state.userData.first_name} {this.state.userData.last_name}</Text>
             <Text style={{ padding: 5 }}>Email: {this.state.userData.email}</Text>
+            <Button
+          title="Update"
+          onPress={() => this.props.navigation.navigate("UpdateUser")}/>
             <Text style={{ padding: 5 }}>My Reviews: </Text>
             <FlatList style={{ padding: 5 }}
               data={this.state.userData.reviews}
@@ -294,8 +296,13 @@ class GetUser extends Component {
               )}
               keyExtractor={(item) => item.location_id.toString()}
             />
-          </View>
+          </View>  
+            <Button
+                   title="Logout"
+                   onPress={() => this.logout()}
+                />
         </ScrollView>
+    
       </View>
 
 

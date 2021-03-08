@@ -1,10 +1,10 @@
 import React , {Component} from 'react';
-import {Button , ToastAndroid, TouchableWithoutFeedbackBase} from 'react-native';
+import {Text, Button , ToastAndroid, TouchableWithoutFeedbackBase} from 'react-native';
 import {ScrollView, TextInput,View} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RNCamera} from 'react-native-camera';
 import styles from '../styleSheets/customStyles';
-
+import Filter from 'bad-words';
 
 class UpdReview extends Component{
   constructor(props){
@@ -48,11 +48,18 @@ class UpdReview extends Component{
     const rev_id = this.props.route.params.review_id;
     const value = await AsyncStorage.getItem('@session_token');
 
+
+    const filter = new Filter();
+    filter.addWords('tea', 'cakes', 'pastries','cake','pastry');
+
     to_send.overall_rating = parseInt(this.state.overall_rating);
     to_send.price_rating = parseInt(this.state.price_rating);   
     to_send.quality_rating = parseInt(this.state.quality_rating);    
     to_send.clenliness_rating = parseInt(this.state.clenliness_rating);
-    to_send.review_body = this.state.review_body;
+    to_send.review_body = filter.clean(this.state.review_body);
+
+   
+    console.log(filter.clean(this.state.review_body));
 
 
     return fetch("http://10.0.2.2:3333/api/1.0.0/location/"+loc_id+"/review/"+rev_id, {
@@ -65,11 +72,11 @@ class UpdReview extends Component{
     })
     .then((response) => {
       if(response.status === 200){
-        console.log(response);
+       // console.log(response);
         
       }
        else if (response.status ===400){
-           console.log(response);
+           //console.log(response);
         throw 'Failed Validation';
       }
       else{
@@ -92,6 +99,10 @@ class UpdReview extends Component{
       render(){
         return(
             <ScrollView>
+              <Text style={{padding: 5}}>
+                Update Review Details: 
+
+              </Text>
               <TextInput
               keyboardType="numeric"
               onChangeText={(overall_rating) => this.setState ({overall_rating})}

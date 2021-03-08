@@ -45,7 +45,8 @@ class SignupScreen extends Component{
     })
     .catch((error) => {
       console.log(error);
-      ToastAndroid.show("error", ToastAndroid.SHORT);
+      alert("Invalid data entry, try again!");
+      //ToastAndroid.show("error", ToastAndroid.SHORT);
     })
       }
       render(){

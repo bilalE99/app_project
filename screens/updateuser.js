@@ -116,8 +116,6 @@ class UpdateUser extends Component {
     } else {
       return (
         <View>
-          <Text>Update user credentials</Text>
-
           <TextInput
             placeholder="Enter first name"
             onChangeText={(first_name) => this.setState({first_name})}

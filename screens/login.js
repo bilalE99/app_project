@@ -44,13 +44,14 @@ class Login extends Component{
       await AsyncStorage.setItem('@user_id' , JSON.stringify(responseJson.id));
       await AsyncStorage.setItem('@user_info' , JSON.stringify(responseJson));
       //convert back to integer when pulling id out
-      this.props.navigation.navigate("Page3");
+      this.props.navigation.navigate("LocationInfo");
       ToastAndroid.show("Logged in successfully!", ToastAndroid.SHORT,ToastAndroid.CENTER);
 
     })
     .catch((error) => {
       console.log(error);
-      ToastAndroid.show("error", ToastAndroid.SHORT);
+      alert("Invalid data, try again!");
+     // ToastAndroid.show("error", ToastAndroid.SHORT);
     })
   }
   render(){
@@ -67,10 +68,15 @@ class Login extends Component{
       onChangeText={(password) => this.setState ({password})}
       value={this.state.password}
       style={{padding:5, borderWidth:1, margin:10}}
+      secureTextEntry={true}
       />
       <Button
       title="Login"
       onPress={() =>  this.login()}
+      />
+        <Button
+      title="Dont Have an Account?"
+      onPress={() =>  this.props.navigation.navigate("Sign Up")}
       />
       </View>
     );
