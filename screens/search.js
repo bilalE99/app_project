@@ -134,11 +134,6 @@ class SearchData extends Component {
           value={this.state.price_rating}
           onChangeText={(price_rating => this.setState({ price_rating: price_rating }))}
         />
-  <Text>Clenliness Rating</Text>
-         <TextInput
-          value={this.state.clenliness}
-          onChangeText={(clenliness => this.setState({ clenliness: clenliness }))}
-        />
         </View>
         <View style={styles.textView}>
   <Text>Clenliness Rating</Text>

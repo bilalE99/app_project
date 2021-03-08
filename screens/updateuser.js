@@ -75,7 +75,7 @@ class UpdateUser extends Component {
         });
         console.log("Details changed");
 
-        this.props.navigation.navigate('UserInfo');
+        this.props.navigation.push('UserInfo');
 
         ToastAndroid.show("Details Updated!", ToastAndroid.SHORT);
       })
