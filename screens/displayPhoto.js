@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Image, ToastAndroid, Alert, View ,FlatList,Text} from 'react-native';
+import { Image, ToastAndroid, Alert, View ,FlatList,Text, StyleSheet} from 'react-native';
 import { Button } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RNCamera } from 'react-native-camera';
-import styles from '../styleSheets/customStyles';
+//import styles from '../styleSheets/customStyles';
 
 
 class DisplayPhoto extends Component {
@@ -60,7 +60,7 @@ class DisplayPhoto extends Component {
         const loc_id = this.props.route.params.location_id;
         return (
 
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
                 
                 <Image style={{ height: 600 ,width: 400, resizeMode: "center" }}
                 source={ {uri : "http://10.0.2.2:3333/api/1.0.0/location/" + loc_id + "/review/" + rev_id + "/photo"+'?' + new Date()}}
@@ -73,5 +73,15 @@ class DisplayPhoto extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+    contentContainer: {
+      paddingVertical: 20
+    },
+    container: {
+      flex: 1,
+      backgroundColor: '#40e0d0',
+      padding: 10,
+    }
+  });
 
 export default DisplayPhoto;

@@ -22,6 +22,7 @@ import DisplayPhoto from './screens/displayPhoto';
 import SettingsPage from './screens/settings';
 
 
+
 const Drawer = createDrawerNavigator();
 
 const Stack = createStackNavigator();

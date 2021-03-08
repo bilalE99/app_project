@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, Button, Alert, TextInput, ToastAndroid, ActivityIndicator} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Button, Alert, TextInput, ScrollView, ToastAndroid, ActivityIndicator, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class UpdateUser extends Component {
@@ -8,26 +8,18 @@ class UpdateUser extends Component {
 
     this.state = {
       isLoading: true,
-      orig_first_name: '',
-      orig_last_name: '',
-      orig_email: '',
-      orig_password: '',
-
-      first_name: '',
-      last_name: '',
-      email: '',
+      first_name: this.props.route.params.f_name,
+      last_name: this.props.route.params.l_name,
+      email: this.props.route.params.email_n,
       password: '',
     };
   }
   componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener('focus', () => {
-      this.checkLoggedIn();
-    });
+    this.displayOrigValues();
   }
-  componentWillUnmount() {
-    this.unsubscribe();
+  displayOrigValues() {
+    console.log("Values Loaded from previous screen");
   }
-
   checkLoggedIn = async () => {
     const value = await AsyncStorage.getItem('@session_token');
     if (value === null) {
@@ -35,12 +27,12 @@ class UpdateUser extends Component {
       Alert.alert('You need to be logged in to view this page');
       //  ToastAndroid.show("You need to be logged in to view this page",ToastAndroid.LONG);
       this.props.navigation.navigate('Login');
-    } else{
+    } else {
       this.setState({
-        isLoading:false
-    })
-  }
-};
+        isLoading: false
+      })
+    }
+  };
 
   updateItem = async () => {
     let to_send = {};
@@ -48,23 +40,11 @@ class UpdateUser extends Component {
     const value = await AsyncStorage.getItem('@session_token');
     const id = await AsyncStorage.getItem('@user_id');
 
-    //  let to_send = {};
+    to_send.first_name = this.state.first_name;
+    to_send.last_name = this.state.last_name;
+    to_send.email = parseInt(this.state.email);
+    to_send.password = parseInt(this.state.password);
 
-    if (this.state.first_name != this.state.orig_first_name) {
-      to_send.first_name = this.state.first_name;
-    }
-
-    if (this.state.last_name != this.state.orig_last_name) {
-      to_send.last_name = this.state.last_name;
-    }
-
-    if (this.state.email != this.state.orig_email) {
-      to_send.email = parseInt(this.state.email);
-    }
-
-    if (this.state.password != this.state.orig_password) {
-      to_send.password = parseInt(this.state.password);
-    }
 
     //  console.log(to_send);
 
@@ -78,7 +58,7 @@ class UpdateUser extends Component {
     })
       .then((response) => {
         if (response.status === 200) {
-         //return response.json();
+          //return response.json();
         } else if (response.status === 400) {
           throw 'Bad Request';
         } else if (response.status === 401) {
@@ -91,13 +71,13 @@ class UpdateUser extends Component {
       .then(async () => {
         this.setState({
           isLoading: false,
-        
-        });
-          console.log("Details changed");
-     
-        this.props.navigation.navigate('Home');
 
-           ToastAndroid.show("Details Updated!", ToastAndroid.SHORT);
+        });
+        console.log("Details changed");
+
+        this.props.navigation.navigate('UserInfo');
+
+        ToastAndroid.show("Details Updated!", ToastAndroid.SHORT);
       })
       .catch((error) => {
         console.log(error);
@@ -107,44 +87,72 @@ class UpdateUser extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    if (this.state.isLoading) {
-      return (
-        <View>
-          <ActivityIndicator size="large" color="#00ff00" />
-        </View>
-      );
-    } else {
-      return (
-        <View>
-          <TextInput
-            placeholder="Enter first name"
-            onChangeText={(first_name) => this.setState({first_name})}
-            value={this.state.first_name}
-            style={{padding: 5, borderWidth: 1, margin: 5}}
-          />
-          <TextInput
-            placeholder="Enter last name"
-            onChangeText={(last_name) => this.setState({last_name})}
-            value={this.state.last_name}
-            style={{padding: 5, borderWidth: 1, margin: 5}}
-          />
-          <TextInput
-            placeholder="Enter email"
-            onChangeText={(email) => this.setState({email})}
-            value={this.state.email}
-            style={{padding: 5, borderWidth: 1, margin: 5}}
-          />
-          <TextInput
-            placeholder="Enter password..."
-            onChangeText={(password) => this.setState({password})}
-            value={this.state.password}
-            style={{padding: 5, borderWidth: 1, margin: 5}}
-          />
-          <Button title="Update" onPress={() => this.updateItem()} />
-        </View>
-      );
-    }
+    return (
+      <View style={styles.container}>
+        <ScrollView>
+          <View>
+            <TextInput
+              placeholder="Enter first name"
+              onChangeText={(first_name) => this.setState({ first_name })}
+              value={this.state.first_name}
+              style={styles.inputContainer}
+            />
+            <TextInput
+              placeholder="Enter last name"
+              onChangeText={(last_name) => this.setState({ last_name })}
+              value={this.state.last_name}
+              style={styles.inputContainer}
+            />
+            <TextInput
+              placeholder="Enter email"
+              onChangeText={(email) => this.setState({ email })}
+              value={this.state.email}
+              style={styles.inputContainer}
+            />
+            <TextInput
+              placeholder="Enter password..."
+              onChangeText={(password) => this.setState({ password })}
+              value={this.state.password}
+              style={styles.inputContainer}
+            />
+            <View style={styles.buttonContainer} >
+              <Button title="Update"
+                onPress={() => this.updateItem()}
+              />
+            </View>
+
+          </View>
+        </ScrollView>
+      </View>
+    );
   }
 }
+
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#40e0d0',
+
+  },
+  buttonContainer: {
+    height: 45,
+    alignItems: 'center',
+    marginBottom: 20,
+    width: 250,
+    borderRadius: 30,
+    margin: 10,
+  },
+  inputContainer: {
+    marginTop: 10,
+    padding: 5,
+    borderWidth: 2,
+    margin: 10
+  }
+});
+
 
 export default UpdateUser;

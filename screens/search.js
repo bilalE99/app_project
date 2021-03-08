@@ -62,6 +62,7 @@ class SearchData extends Component {
           isLoading: false,
           locations: responseJson,
         })
+        //this.props.navigation.navigate('DisplaySearch', {searchResults: this.state.locations});
 
       })
       .catch((error) => {
@@ -116,13 +117,14 @@ class SearchData extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <Text>Search</Text>
+      <View style={styles.container}>
+        <View style={styles.textView}>
+          <Text>Search: </Text>
         <TextInput
           value={this.state.q}
           onChangeText={(q => this.setState({ q: q }))}
         />
-        <Text>Limit</Text>
+        <Text>Limit:</Text>
          <TextInput
           value={this.state.limit}
           onChangeText={(limit => this.setState({ limit: limit }))}
@@ -132,22 +134,31 @@ class SearchData extends Component {
           value={this.state.price_rating}
           onChangeText={(price_rating => this.setState({ price_rating: price_rating }))}
         />
-      <Text>Quality Rating</Text>
-         <TextInput
-          value={this.state.quality}
-          onChangeText={(quality => this.setState({ quality: quality }))}
-        />
-          <Text>Clenliness Rating</Text>
+  <Text>Clenliness Rating</Text>
          <TextInput
           value={this.state.clenliness}
           onChangeText={(clenliness => this.setState({ clenliness: clenliness }))}
         />
-        <Text>Overall Rating</Text>
+        </View>
+        <View style={styles.textView}>
+  <Text>Clenliness Rating</Text>
+         <TextInput
+          value={this.state.clenliness}
+          onChangeText={(clenliness => this.setState({ clenliness: clenliness }))}
+        />   
+        <Text>Quality Rating</Text>
+         <TextInput
+          value={this.state.quality}
+          onChangeText={(quality => this.setState({ quality: quality }))}
+        />
+        </View>
+          <Text>Overall Rating</Text>
         <AirbnbRating
           size={10}
           defaultRating={0}
           onFinishRating={(rating) => this.ratingCompleted(rating, "overall_rating")}
         />
+      
 
         <Button
           title="Search"
@@ -177,5 +188,23 @@ class SearchData extends Component {
 
 };
 
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#cd5c5c',
+    padding: 10,
+    
+  },
+  textView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 10,
+    
+  }
+});
 
 export default SearchData;

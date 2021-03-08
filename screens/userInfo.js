@@ -48,7 +48,7 @@ class GetUser extends Component {
       },
     })
       .then((response) => {
-        if (response.status === 200) {    
+        if (response.status === 200) {
           return response.json();
         }
         else if (response.status === 401) {
@@ -59,8 +59,8 @@ class GetUser extends Component {
         }
       })
       .then((responseJson) => {
-       // console.log(responseJson);
-       console.log('Data successfully loaded');
+        // console.log(responseJson);
+        console.log('Data successfully loaded');
         this.setState({
           isLoading: false,
           userData: responseJson,
@@ -141,45 +141,10 @@ class GetUser extends Component {
         ToastAndroid.show("error", ToastAndroid.SHORT);
       })
   }
-
-
-  likeReview = async (loc_id, rev_id) => {
+  unfavLocation = async (loc_id) => {
 
     const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://10.0.2.2:3333/api/1.0.0/location/" + loc_id + "/review/" + rev_id + '/like', {
-      method: 'post',
-      headers: {
-        'X-Authorization': value,
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-        }
-        else if (response.status === 404) {
-          //console.log(response);
-        }
-        else {
-          throw 'Something went wrong';
-        }
-
-      })
-      .then(async () => {
-        console.log("Review Liked");
-        this.getUserInfo();
-        ToastAndroid.show("Review Liked", ToastAndroid.SHORT);
-      })
-      .catch((error) => {
-        console.log(error);
-        ToastAndroid.show("error", ToastAndroid.SHORT);
-      })
-  }
-
-
-  unlikeReview = async (loc_id, rev_id) => {
-
-    const value = await AsyncStorage.getItem('@session_token');
-    return fetch("http://10.0.2.2:3333/api/1.0.0/location/" + loc_id + "/review/" + rev_id + '/like', {
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/" + loc_id + "/favourite", {
       method: 'delete',
       headers: {
         'X-Authorization': value,
@@ -187,7 +152,7 @@ class GetUser extends Component {
     })
       .then((response) => {
         if (response.status === 200) {
-          console.log(response);
+          //console.log(response);
         }
         else if (response.status === 404) {
           //console.log(response);
@@ -198,36 +163,34 @@ class GetUser extends Component {
 
       })
       .then(async () => {
-        console.log("Unliked Review");
+        console.log("Location Unfavourited");
         this.getUserInfo();
-        ToastAndroid.show("Unliked Review", ToastAndroid.SHORT);
+        ToastAndroid.show("Location removed from Favourites", ToastAndroid.SHORT);
       })
       .catch((error) => {
         console.log(error);
         ToastAndroid.show("error", ToastAndroid.SHORT);
       })
-    }
-  
+  }
   render() {
 
-    /*    const data = this.state.photoInfo;
-        const x = new Map(Object.entries(data));
-        var y = x.get('url');
-        */
     return (
 
 
-      <View>
+      <View style={styles.container}>
 
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={{ padding: 5 }}>
-            <Text >My Account</Text>
+            <Text  style={styles.titleText} >My Account</Text>
             <Text style={{ padding: 5 }}>Name: {this.state.userData.first_name} {this.state.userData.last_name}</Text>
             <Text style={{ padding: 5 }}>Email: {this.state.userData.email}</Text>
             <Button
-          title="Update"
-          onPress={() => this.props.navigation.navigate("UpdateUser")}/>
-            <Text style={{ padding: 5 }}>My Reviews: </Text>
+              title="Update"
+              onPress={() => this.props.navigation.navigate("UpdateUser",
+              {f_name: this.state.userData.first_name, l_name: this.state.userData.last_name,
+                    email_n: this.state.userData.email}
+              )} />
+            <Text  style={styles.titleText}>My Reviews: </Text>
             <FlatList style={{ padding: 5 }}
               data={this.state.userData.reviews}
               renderItem={({ item }) => (
@@ -265,44 +228,34 @@ class GetUser extends Component {
                       title="Delete Photo"
                       onPress={() => this.deletePhoto(item.location.location_id, item.review.review_id)}
                     />
-                    <Button
-                      title="Like"
-                      onPress={() => this.likeReview(item.location.location_id, item.review.review_id)}
-                   />   
-                   <Button
-                   title="unLike"
-                   onPress={() => this.unlikeReview(item.location.location_id, item.review.review_id)}
-                />
-                  
                   </View>
 
                 </TouchableOpacity>
               )}
               keyExtractor={(item) => item.review.review_id.toString()}
             />
-            <Text style={{ padding: 5 }}>Favourite Locations: </Text>
+            <Text style={styles.titleText}>Favourite Locations: </Text>
             <FlatList style={{ padding: 15 }}
               data={this.state.userData.favourite_locations}
               renderItem={({ item }) => (
 
-                  <View style={{ padding: 25, flex: 1, paddingVertical: 20 }}>
-                    <Text>{item.location_name}</Text>
-                    <Text>{item.location_town}</Text>
-                    <Text>Overall Rating: {item.avg_overall_rating}</Text>
+                <View style={{ padding: 25, flex: 1, paddingVertical: 20 }}>
+                  <Text>{item.location_name}</Text>
+                  <Text>{item.location_town}</Text>
+                  <Text>Overall Rating: {item.avg_overall_rating}</Text>
 
-
-                  </View>
+                  <Button
+                    title="Unfavourite this Location"
+                    onPress={() => this.unfavLocation(item.location_id)}
+                  />
+                </View>
 
               )}
               keyExtractor={(item) => item.location_id.toString()}
             />
-          </View>  
-            <Button
-                   title="Logout"
-                   onPress={() => this.logout()}
-                />
+          </View>
         </ScrollView>
-    
+
       </View>
 
 
@@ -313,7 +266,21 @@ class GetUser extends Component {
 const styles = StyleSheet.create({
   contentContainer: {
     paddingVertical: 20
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#40e0d0',
+    padding: 10,
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    padding: 5 
   }
 });
+
+
 
 export default GetUser;
