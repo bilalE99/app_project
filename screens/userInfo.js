@@ -48,7 +48,7 @@ class GetUser extends Component {
       },
     })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 200) {    
           return response.json();
         }
         else if (response.status === 401) {
@@ -59,7 +59,8 @@ class GetUser extends Component {
         }
       })
       .then((responseJson) => {
-        console.log(responseJson);
+       // console.log(responseJson);
+       console.log('Data successfully loaded');
         this.setState({
           isLoading: false,
           userData: responseJson,
@@ -141,6 +142,73 @@ class GetUser extends Component {
       })
   }
 
+
+  likeReview = async (loc_id, rev_id) => {
+
+    const value = await AsyncStorage.getItem('@session_token');
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/" + loc_id + "/review/" + rev_id + '/like', {
+      method: 'post',
+      headers: {
+        'X-Authorization': value,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+        }
+        else if (response.status === 404) {
+          //console.log(response);
+        }
+        else {
+          throw 'Something went wrong';
+        }
+
+      })
+      .then(async () => {
+        console.log("Review Liked");
+        this.getUserInfo();
+        ToastAndroid.show("Review Liked", ToastAndroid.SHORT);
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show("error", ToastAndroid.SHORT);
+      })
+  }
+
+
+  unlikeReview = async (loc_id, rev_id) => {
+
+    const value = await AsyncStorage.getItem('@session_token');
+    return fetch("http://10.0.2.2:3333/api/1.0.0/location/" + loc_id + "/review/" + rev_id + '/like', {
+      method: 'delete',
+      headers: {
+        'X-Authorization': value,
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+        }
+        else if (response.status === 404) {
+          //console.log(response);
+        }
+        else {
+          throw 'Something went wrong';
+        }
+
+      })
+      .then(async () => {
+        console.log("Unliked Review");
+        this.getUserInfo();
+        ToastAndroid.show("Unliked Review", ToastAndroid.SHORT);
+      })
+      .catch((error) => {
+        console.log(error);
+        ToastAndroid.show("error", ToastAndroid.SHORT);
+      })
+    }
+  
+
   render() {
 
     /*    const data = this.state.photoInfo;
@@ -197,8 +265,12 @@ class GetUser extends Component {
                     />
                     <Button
                       title="Like"
-                      onPress={() => console.log("ss")}
-                   />
+                      onPress={() => this.likeReview(item.location.location_id, item.review.review_id)}
+                   />   
+                   <Button
+                   title="unLike"
+                   onPress={() => this.unlikeReview(item.location.location_id, item.review.review_id)}
+                />
                   
                   </View>
 
@@ -206,11 +278,22 @@ class GetUser extends Component {
               )}
               keyExtractor={(item) => item.review.review_id.toString()}
             />
-            <View >
+            <Text style={{ padding: 5 }}>Favourite Locations: </Text>
+            <FlatList style={{ padding: 15 }}
+              data={this.state.userData.favourite_locations}
+              renderItem={({ item }) => (
+
+                  <View style={{ padding: 25, flex: 1, paddingVertical: 20 }}>
+                    <Text>{item.location_name}</Text>
+                    <Text>{item.location_town}</Text>
+                    <Text>Overall Rating: {item.avg_overall_rating}</Text>
 
 
-            </View>
+                  </View>
 
+              )}
+              keyExtractor={(item) => item.location_id.toString()}
+            />
           </View>
         </ScrollView>
       </View>
